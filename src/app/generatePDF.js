@@ -1,5 +1,6 @@
-import React from '@react-pdf/renderer';
-const { Page, Text, View, Document, StyleSheet } = React;
+import React from 'react';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -15,30 +16,22 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const MyDocument = () => {
-    return React.createElement(
-        Document,
-        null,
-        React.createElement(
-            Page,
-            { size: 'A4', style: styles.page },
-            React.createElement(
-                View,
-                { style: styles.section },
-                React.createElement(Text, null, 'Section #1')
-            ),
-            React.createElement(
-                View,
-                { style: styles.section },
-                React.createElement(Text, null, 'Section #2')
-            )
-        )
-    );
-};
+const MyDocument = () => (
+    <Document>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Text>Section #1</Text>
+            </View>
+            <View style={styles.section}>
+                <Text>Section #2</Text>
+            </View>
+        </Page>
+    </Document>
+);
 
 // Render the PDF to a file
 const pdfPath = `${__dirname}/example.pdf`;
-React.render(MyDocument(), pdfPath)
+ReactPDF.render(<MyDocument />, pdfPath)
     .then(() => {
         console.log(`PDF created at: ${pdfPath}`);
     })
